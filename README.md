@@ -1,5 +1,11 @@
 # ossf-scorecard-port-exporter
 
+## Pre-requisites
+
+Having your GitHub project configured to publish OSSF Scorecards, check the instructions [here](https://github.com/marketplace/actions/ossf-scorecard-action) and [here](https://github.com/ossf/scorecard?tab=readme-ov-file#scorecard-rest-api).
+
+
+
 ## Blueprints
 
 ### OSSF Scorecard
@@ -115,6 +121,22 @@ docker run -i --rm \
   sebi2706/ossf-scorecard-port-exporter:0.1
 ```
 That will poll the scorecard result and push it to Port with a default frequency of `5m` , you can change this by the env var : `PORT_SCHEDULER_FREQUENCY`.
+
+### Running locally
+
+This is an quarkus app, , rename `.env.sample` to `.env` and set your values, you can start it in dev mode with `mvn quarkus:dev` or `quarkus dev` if you have the Quarkus CLI. 
+
+You can also but a regular `jar` with `mvn clean package` and then run it like : 
+
+```
+java -jar target/quarkus-app/quarkus-run.jar
+
+```
+### Kubernetes
+
+Update the env vars in `manifests/ossf-port-exporter.yml` (or even better move that to secrets and config maps ) and then simply apply the resource : `kubectl apply -f manifests/oss-port-exporter.yml`.
+This will create a `Deployment` and `Pod`. 
+
 
 ## TODOS
 
